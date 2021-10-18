@@ -10,6 +10,7 @@ const morgan = require("morgan");
 //using exported route
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
+const postRoute = require("./routes/posts");
 // to use 
 dotenv.config();
 //to connect to mongodb using mongoose (making connection)
@@ -29,8 +30,10 @@ app.use(morgan("common"));
 // app.get("/", (req, res) => {
 //     res.send("welcome to homepage");
 // });
-app.use("/api/users", userRoute); //address for rest api,whenever we go to /api/users it is going to run userRoute.
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute); //address for rest api,whenever we go to /api/users it is going to run userRoute.
+app.use("/api/posts", postRoute);
+
 app.listen(8800, () => {
     console.log("Backend server is running");
 });
