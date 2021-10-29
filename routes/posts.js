@@ -1,5 +1,4 @@
 const { route } = require("./users");
-
 const router = require("express").Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
@@ -70,10 +69,21 @@ router.get("/:id", async (req, res) => {
         res.status(500).json(err);
     }
 });
-//timeline
-router.get("/timeline/all", async (req, res) => {
+//get user's all posts
+router.get("/profile/:username", async (req, res) => {
     try {
-        const currentUser = await User.findById(req.body.userId);
+        const user = await User.findOne({ username: req.params.username })
+        const posts = await Post.find({ userId: user._id });
+        res.status(200).json(posts);
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
+});
+//timeline
+router.get("/timeline/:userId", async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.params.userId);
         const userPosts = await Post.find({ userId: currentUser._id });
         //here we use promise because we are using map,so it that it can fetch all the posts.
         const friendPosts = await Promise.all(
@@ -81,7 +91,7 @@ router.get("/timeline/all", async (req, res) => {
                 return Post.find({ userId: friendId });
             })
         );
-        res.json(userPosts.concat(...friendPosts));
+        res.status(200).json(userPosts.concat(...friendPosts));
     }
     catch (err) {
         res.status(500).json(err);
