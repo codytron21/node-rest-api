@@ -42,15 +42,15 @@ const storage = multer.diskStorage({
         cb(null, req.body.name);
     },
 });
-const upload = multer(storage);
+const upload = multer({ storage: storage });
 //writting a request here for uploading files.(we can do this by making separate routes like before . like we did for users ,posts)
 app.post("/api/upload", upload.single("file"), (req, res) => {
     try {
         //  upload.single() will automatically upload our file ,so we will just return the response.
         return res.status(200).json("file uploaded successfully.");
     }
-    catch (err) {
-        console.log(err);
+    catch (error) {
+        console.log(error);
     }
 })
 // using app
