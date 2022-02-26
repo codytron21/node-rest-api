@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
-
+const cors = require("cors");
 //using exported route
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
@@ -30,6 +30,7 @@ mongoose
 //it will prevent any request on /images instead it will go to public/images directory.
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 //adding middleware
+app.use(cors());
 app.use(express.json()); //bug imparser
 app.use(helmet());
 app.use(morgan("common"));
@@ -65,6 +66,6 @@ app.use("/api/posts", postRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 
-app.listen(8800 || process.env.PORT, () => {
+app.listen(process.env.PORT || 8800, () => {
   console.log("Backend server is running");
 });
