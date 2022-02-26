@@ -59,9 +59,9 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 });
 // using app
 // "/" means homepage.
-// app.get("/", (req, res) => {
-//     res.send("welcome to homepage");
-// });
+app.get("/", (req, res) => {
+  res.send("welcome to homepage");
+});
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute); //address for rest api,whenever we go to /api/users it is going to run userRoute.
 app.use("/api/posts", postRoute);
