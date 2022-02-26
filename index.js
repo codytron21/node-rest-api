@@ -22,11 +22,11 @@ dotenv.config();
 //to connect to mongodb using mongoose (making connection)
 mongoose
   .connect(
-    // process.env.MONGO_URL
-    "mongodb + srv://codytron_21:rkr%401816@cluster0.5mlz1.mongodb.net/social?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+    process.env.MONGO_URL
+    , {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
   .then(() => console.log("Database connected!"))
   .catch((err) => console.log(err));
 //it will prevent any request on /images instead it will go to public/images directory.
